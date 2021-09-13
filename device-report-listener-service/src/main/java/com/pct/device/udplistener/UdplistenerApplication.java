@@ -1,18 +1,24 @@
 package com.pct.device.udplistener;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import com.pct.device.udplistener.util.UDPListener;
 
 @SpringBootApplication
 public class UdplistenerApplication {
 
+	@Autowired
+	UDPListener uDPListener;
 	public static void main(String[] args) {
 		SpringApplication.run(UdplistenerApplication.class, args);
-		UDPListener r1 = new UDPListener();
-		Thread t1 = new Thread(r1);
-		t1.start();
+	
+	
 	}
-
+	 @Bean(initMethod="runAfterObjectCreated")
+	    public BeanInitMethodImpl getFunnyBean() {
+	        return new BeanInitMethodImpl();
+	    }
 }

@@ -13,10 +13,11 @@ import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.pct.device.udplistener.engine.Producer;
 import com.pct.tlv.common.utils.StringUtilities;
-
+@Component
 public class UDPListener implements Runnable {
 
 	static Logger logger = LoggerFactory.getLogger(UDPListener.class);
@@ -33,6 +34,7 @@ public class UDPListener implements Runnable {
 
 	@Override
 	public void run() {
+		System.out.println("Starting UDP Listener on " +serverIP +" : " +serverPort);
 		try {
 			socket = new DatagramSocket(serverPort, InetAddress.getByName(serverIP));
 		} catch (SocketException e1) {
@@ -52,8 +54,8 @@ public class UDPListener implements Runnable {
 				String rawString = StringUtilities.Byte2HexString(packet.getData(), 0, 256);
 				InetAddress inetAddress = InetAddress.getByName(serverIP);
 				byte[] buf = StringUtilities.Hex2Byte(rawString);
-				DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length, inetAddress, serverPort);
-				producer.sendMessage(datagramPacket, StringUtilities.TOPIC);
+			//	DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length, inetAddress, serverPort);
+				producer.sendMessage(packet, StringUtilities.TOPIC);
 				logger.info("data packet sent using kafka");
 			} catch (IOException e) {
 				logger.info("Exception " + e.getMessage());

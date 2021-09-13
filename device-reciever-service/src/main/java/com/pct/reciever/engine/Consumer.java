@@ -88,7 +88,7 @@ public class Consumer {
 		return new SimpleRetryPolicy(4, exceptionMap, true);
 	}
 
-	@KafkaListener(topics = "parsing", containerFactory = "kafkaListenerContainerFactory")
+	@KafkaListener(topics = "users", containerFactory = "kafkaListenerContainerFactory")
 	public void listen(String in) throws TimeoutException, IOException {
 
 		String uuid = UUID.randomUUID().toString();

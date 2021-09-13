@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.pct.device.command.entity.DeviceCommandManager;
+import com.pct.device.command.entity.DeviceCommand;
 
 @Repository
 public interface IDeviceCommandRespository
-		extends JpaRepository<DeviceCommandManager, Long>, JpaSpecificationExecutor<DeviceCommandManager> {
+		extends JpaRepository<DeviceCommand, Long>, JpaSpecificationExecutor<DeviceCommand> {
 
-	@Query("FROM DeviceCommandManager deviceCommandManager WHERE deviceCommandManager.uuid = :uuid")
-	DeviceCommandManager findByUuid(@Param("uuid") String uuid);
+	@Query("FROM DeviceCommand deviceCommandManager WHERE deviceCommandManager.uuid = :uuid")
+	DeviceCommand findByUuid(@Param("uuid") String uuid);
 }

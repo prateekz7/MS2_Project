@@ -1,12 +1,8 @@
 package com.pct.reciever.services;
 
-import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -15,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.pct.device.command.service.IDeviceCommandService;
 import com.pct.reciever.engine.RuleEngine;
 import com.pct.reciever.models.ReceivedUDPPacket;
 import com.pct.reciever.models.ReportHeader;
@@ -37,6 +34,9 @@ public class DatapacketNavigation {
 	@Autowired
 	private RuleEngine ruleEngine;
 	private boolean isRunning = true;
+
+	@Autowired
+	IDeviceCommandService deviceCommandService; 
 
 	public void reportTypeCheck(DatagramPacket dataPacket, String uuid) {
 
@@ -103,6 +103,9 @@ public class DatapacketNavigation {
 						ReportHeader reportHeader = Tokeniser.Parse7DFrameHeader(receivedUDPPacket,
 								packetDestinationIP);
 						ruleEngine.executeRules(reportHeader, receivedUDPPacket);
+						deviceCommandService.processATCommand(reportHeader.getDeviceID(),deviceIPAddress,devicePort,listenerIP, listenerPort);
+						deviceCommandService.processAck(receivedData, deviceIPAddress, reportHeader.getDeviceID(), devicePort, listenerIP, listenerPort);
+						
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

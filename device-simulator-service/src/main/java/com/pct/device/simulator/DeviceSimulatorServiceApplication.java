@@ -2,6 +2,7 @@ package com.pct.device.simulator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import com.pct.device.simulator.util.DeviceSimulator;
 
@@ -10,9 +11,12 @@ public class DeviceSimulatorServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DeviceSimulatorServiceApplication.class, args);
-		DeviceSimulator r1 = new DeviceSimulator();
-		Thread t1 = new Thread(r1);
-		t1.start();
+
+	}
+
+	@Bean(initMethod = "runAfterObjectCreated")
+	public BeanInitMethodImpl getThreadBean() {
+		return new BeanInitMethodImpl();
 	}
 
 }
