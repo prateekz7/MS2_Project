@@ -1,4 +1,4 @@
-package com.pct.udplistener.util;
+package com.pct.device.udplistener.util;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -12,19 +12,23 @@ import java.time.Instant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.pct.device.udplistener.engine.Producer;
+import com.pct.tlv.common.utils.StringUtilities;
 
 public class UDPListener implements Runnable {
 
 	static Logger logger = LoggerFactory.getLogger(UDPListener.class);
 	private boolean isRunning = true;
-	public static final int LISTEN_PACKET_LEN = 2048;
 
-	String serverIP = "127.0.0.1";
-	int serverPort = 15023;
+	@Value("${listener.udp.ip}")
+	private String serverIP;
+	@Value("${listener.udp.port}")
+	private int serverPort;
+
 	private DatagramSocket socket = null;
-	private InetAddress clientIPAddress;
+
 	Producer producer = new Producer();
 
 	@Override
@@ -32,7 +36,6 @@ public class UDPListener implements Runnable {
 		try {
 			socket = new DatagramSocket(serverPort, InetAddress.getByName(serverIP));
 		} catch (SocketException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (UnknownHostException e1) {
 			// TODO Auto-generated catch block
@@ -40,7 +43,7 @@ public class UDPListener implements Runnable {
 		}
 		while (isRunning) {
 			try {
-				byte[] buffer = new byte[LISTEN_PACKET_LEN];
+				byte[] buffer = new byte[StringUtilities.LISTEN_PACKET_LEN];
 				logger.info("Inside thread");
 				// receive UDP packet
 				DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
@@ -50,7 +53,7 @@ public class UDPListener implements Runnable {
 				InetAddress inetAddress = InetAddress.getByName(serverIP);
 				byte[] buf = StringUtilities.Hex2Byte(rawString);
 				DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length, inetAddress, serverPort);
-				producer.sendMessage(datagramPacket, "parsing");
+				producer.sendMessage(datagramPacket, StringUtilities.TOPIC);
 				logger.info("data packet sent using kafka");
 			} catch (IOException e) {
 				logger.info("Exception " + e.getMessage());
