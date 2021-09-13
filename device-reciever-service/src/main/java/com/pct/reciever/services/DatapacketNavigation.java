@@ -102,7 +102,7 @@ public class DatapacketNavigation {
 						System.out.println("7d report found..");
 						ReportHeader reportHeader = Tokeniser.Parse7DFrameHeader(receivedUDPPacket,
 								packetDestinationIP);
-						ruleEngine.checkIfMaintenanceReport(reportHeader, receivedUDPPacket);
+						ruleEngine.executeRules(reportHeader, receivedUDPPacket);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

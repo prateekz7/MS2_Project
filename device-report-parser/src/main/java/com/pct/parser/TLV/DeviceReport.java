@@ -19,6 +19,15 @@ public class DeviceReport {
 	public BaseTLV<Voltage> voltage;
 
 	public DeviceReport() {
+		
+		
 
 	}
+	
+	
+	public Object parse()
+	{
+		return null;
+	}
+
 }

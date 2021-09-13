@@ -176,13 +176,13 @@ public class ParseRawReport implements Serializable, Serializer {
 		// next 1 or 2 bytes is/are the report event information.
 		// If the 3 MSBs are on then we have 2 bytes for length otherwise a single byte
 		///////////////////////////////////////////////////////////////////////////////
-		byte[] fieldBytes = GetOneOrTwoBytes(report, payloadIndex);
+		byte[] fieldBytes = getOneOrTwoBytes(report, payloadIndex);
 		payloadIndex = parseEvent(fieldBytes, payloadIndex);
 
 		// next 1 or 2 bytes is/are the report payload length information.
 		// If the 3 MSBs are on then we have 2 bytes for length otherwise a single byte
 		///////////////////////////////////////////////////////////////////////////////
-		fieldBytes = GetOneOrTwoBytes(report, payloadIndex);
+		fieldBytes = getOneOrTwoBytes(report, payloadIndex);
 		fieldLen = fieldBytes.length;
 		int frameLengthFromReport;
 
@@ -296,7 +296,7 @@ public class ParseRawReport implements Serializable, Serializer {
 			// next 1 or 2 bytes is/are the TLV tag information.
 			// If the 3 MSBs are on then we have 2 bytes for length otherwise a single byte
 			///////////////////////////////////////////////////////////////////////////////
-			TLBytes = GetOneOrTwoBytes(report, payloadIndex);
+			TLBytes = getOneOrTwoBytes(report, payloadIndex);
 
 			// now we can parse the unsigned tag. If there is no tag we will still try to
 			// read the lenght
@@ -311,7 +311,7 @@ public class ParseRawReport implements Serializable, Serializer {
 			// next 1 or 2 bytes is/are the TLV length information.
 			// If the 3 MSBs are on then we have 2 bytes for length otherwise a single byte
 			///////////////////////////////////////////////////////////////////////////////
-			TLBytes = GetOneOrTwoBytes(report, payloadIndex);
+			TLBytes = getOneOrTwoBytes(report, payloadIndex);
 			// now we can parse the unsigned length. If there is no length we will exit the
 			// parsing since
 			// we can provide increment for the next TLV
@@ -379,7 +379,6 @@ public class ParseRawReport implements Serializable, Serializer {
 						// todo
 						break;
 					case ParseTLVReportConstants.TLV_FIELD_REMOTE_START_YELLOW_ALARM_RESPONSE:
-
 						break;
 
 					case ParseTLVReportConstants.TLV_FIELD_CHASSIS_MATE_SENSOR:
@@ -506,7 +505,7 @@ public class ParseRawReport implements Serializable, Serializer {
 
 	}
 
-	public static byte[] GetOneOrTwoBytes(byte[] report, int payloadIndex) {
+	public static byte[] getOneOrTwoBytes(byte[] report, int payloadIndex) {
 
 		if ((report == null) || (payloadIndex >= report.length)) {
 			return new byte[0]; // return empty array

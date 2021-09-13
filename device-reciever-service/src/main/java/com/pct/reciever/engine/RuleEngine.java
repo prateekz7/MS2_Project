@@ -14,10 +14,10 @@ public class RuleEngine {
 	@Autowired
 	private CampaignManager campaignManager;
 
-	public void checkIfMaintenanceReport(ReportHeader reportHeader, ReceivedUDPPacket receivedUDPPacket) {
+	public void executeRules(ReportHeader reportHeader, ReceivedUDPPacket receivedUDPPacket) {
 
-		// if(reportHeader.getEventID()==34) {
-		if (true) {
+		 if(reportHeader.getEventID()==34) {
+		//if (true) {
 			campaignManager.getATCommandFromRuleEngine(reportHeader, receivedUDPPacket);
 		}
 	}
