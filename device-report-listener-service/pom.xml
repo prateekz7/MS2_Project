@@ -8,10 +8,10 @@
 		<version>2.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.pct.device.udplistener</groupId>
-	<artifactId>udplistener</artifactId>
+	<groupId>com.pct</groupId>
+	<artifactId>device-report-listener</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>udplistener</name>
+	<name>device-report-listener</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
