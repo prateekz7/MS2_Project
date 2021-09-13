@@ -8,10 +8,10 @@ import java.util.Locale;
 import static java.nio.CharBuffer.wrap;
 import static java.util.Objects.requireNonNull;
 
-/**
- * Created by Sarit
- */
+
 public class StringUtilities {
+	public static final String TOPIC = "users";
+	public static final int LISTEN_PACKET_LEN = 2048;
 
     public static final byte    CR = 0x0D;
     public static final byte    LF = 0x0A;

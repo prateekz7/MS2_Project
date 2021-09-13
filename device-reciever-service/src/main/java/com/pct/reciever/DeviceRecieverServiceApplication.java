@@ -1,4 +1,4 @@
-package com.pct.reciever.devicerecieverservice;
+package com.pct.reciever;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

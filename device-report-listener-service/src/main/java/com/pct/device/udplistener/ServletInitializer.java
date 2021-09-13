@@ -1,4 +1,4 @@
-package com.pct.device.udplistener.udplistener;
+package com.pct.device.udplistener;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

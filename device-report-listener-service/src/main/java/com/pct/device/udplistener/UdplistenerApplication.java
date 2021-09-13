@@ -1,9 +1,9 @@
-package com.pct.device.udplistener.udplistener;
+package com.pct.device.udplistener;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.pct.udplistener.util.UDPListener;
+import com.pct.device.udplistener.util.UDPListener;
 
 @SpringBootApplication
 public class UdplistenerApplication {
