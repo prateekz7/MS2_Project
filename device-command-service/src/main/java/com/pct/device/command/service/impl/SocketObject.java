@@ -14,7 +14,6 @@ public class SocketObject {
 		if (socket == null) {
 
 			socket = new DatagramSocket(serverPort, InetAddress.getByName(serverIP));
-
 		}
 		return socket;
 	}

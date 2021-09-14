@@ -100,7 +100,7 @@ public class Consumer {
 		DatagramPacket datagramPacket = new DatagramPacket(object.getBuf(), object.getBufLength(), object.getAddress(),
 				object.getPort());
 
-		packetNavigation.reportTypeCheck(datagramPacket, uuid);
+		packetNavigation.processReport(datagramPacket, uuid);
 	}
 
 }

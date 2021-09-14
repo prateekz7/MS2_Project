@@ -281,7 +281,7 @@ public class DeviceCommandServiceImpl implements IDeviceCommandService {
 			InetAddress listenerInetAddress, int listenerPort)
 	{
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(new java.util.Date().getTime());
-
+		//get AT command from redis
 		//DeviceCommand deviceCommand  = getDeviceCommandFromRedis(deviceId);
 		DeviceCommand deviceCommand = new DeviceCommand();
 		sendATCommand(deviceId,deviceCommand.getAtCommand(),timestamp,listenerInetAddress,listenerPort);

@@ -21,34 +21,27 @@ import com.pct.reciever.utils.GeneralUtilities;
 @Service
 public class DatapacketNavigation {
 
+	
 	@Value("${listener.udp.ip}")
-	private String url;
+	private String listenerIp;
 	@Value("${listener.udp.port}")
-	private int port;
-	private InetAddress deviceIPAddress;
-	private int devicePort;
-	private int listenerPort;
-	private Inet4Address listenerIP;
-//	private int localPort;
+	private int listenerPort;	
+    private Inet4Address listenerInetAddressIP;
 	public static final int LISTEN_PACKET_LEN = 2048;
 	@Autowired
 	private RuleEngine ruleEngine;
-	private boolean isRunning = true;
+	
 
 	@Autowired
 	IDeviceCommandService deviceCommandService; 
 
-	public void reportTypeCheck(DatagramPacket dataPacket, String uuid) {
+	public void processReport(DatagramPacket dataPacket, String uuid) {
 
 		try {
-			// open a soccket here to receive datagram packet from AT command processor,
-			// change IP and Port of
-			// datagram pkt and send to device
 
-			listenerIP = (Inet4Address) Inet4Address.getByName(url);
-			listenerPort = port;
-			deviceIPAddress = dataPacket.getAddress();
-			devicePort = dataPacket.getPort();
+			listenerInetAddressIP = (Inet4Address) Inet4Address.getByName(listenerIp);
+			InetAddress deviceIPAddress = dataPacket.getAddress();
+			int devicePort = dataPacket.getPort();
 			String packetDestinationIP = GeneralUtilities.GetOutboundAddress(dataPacket.getSocketAddress())
 					.getHostAddress();
 			Instant instant = Instant.now();
@@ -73,7 +66,7 @@ public class DatapacketNavigation {
 				try {
 
 					receivedUDPPacket = new ReceivedUDPPacket(receivedDataPacket, deviceIPAddress, devicePort,
-							listenerIP, listenerPort, uuid, instant);
+							listenerInetAddressIP, listenerPort, uuid, instant);
 
 					System.out.println(receivedDataPacket[0]);
 					if ((receivedDataPacket[0] == Constants.UDP_RESPONSE_IDENTIFIER_BYTE)
@@ -103,8 +96,8 @@ public class DatapacketNavigation {
 						ReportHeader reportHeader = Tokeniser.Parse7DFrameHeader(receivedUDPPacket,
 								packetDestinationIP);
 						ruleEngine.executeRules(reportHeader, receivedUDPPacket);
-						deviceCommandService.processATCommand(reportHeader.getDeviceID(),deviceIPAddress,devicePort,listenerIP, listenerPort);
-						deviceCommandService.processAck(receivedData, deviceIPAddress, reportHeader.getDeviceID(), devicePort, listenerIP, listenerPort);
+						deviceCommandService.processATCommand(reportHeader.getDeviceID(),deviceIPAddress,devicePort,listenerInetAddressIP, listenerPort);
+						deviceCommandService.processAck(receivedData, deviceIPAddress, reportHeader.getDeviceID(), devicePort, listenerInetAddressIP, listenerPort);
 						
 					}
 				} catch (Exception e) {

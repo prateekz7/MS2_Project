@@ -44,5 +44,7 @@ public class DeviceCommandRequest {
 
 	private int listenerPort;
 	private InetAddress listenerIPAddress;
-
+	private InetAddress deviceIPAddress;
+	private int devicePort;
+	
 }
