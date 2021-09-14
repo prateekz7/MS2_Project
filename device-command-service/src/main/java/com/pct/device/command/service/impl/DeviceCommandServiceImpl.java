@@ -224,9 +224,6 @@ public class DeviceCommandServiceImpl implements IDeviceCommandService {
 		System.arraycopy(timeBytes, 0, sendData, destPosition, Constant.TIMESTAMP_BYTES_LEN);
 		destPosition += timeBytes.length;
 
-		// now send the packet to the device via the same socket the server used for
-		// receiving the device report and sending ACK
-		//////////////////////////////////////////////////////////////////////////////
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, listenerInetAddress, listenerPort);
 		InetAddress deviceInetAddressForSocket = listenerInetAddress;
 		try {
